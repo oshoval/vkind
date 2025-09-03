@@ -228,15 +228,15 @@ function setup_kind() {
 
     _install_cnis
 
-    _kubectl create -f cluster-up/cluster/vkind/manifests/flannel.yaml
-    _kubectl create -f cluster-up/cluster/vkind/manifests/knp.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/flannel.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/knp.yaml
 
-    _kubectl create -f cluster-up/cluster/vkind/manifests/namespace.yaml
-    _kubectl create -f cluster-up/cluster/vkind/manifests/network-addons-config.crd.yaml
-    _kubectl create -f cluster-up/cluster/vkind/manifests/operator.yaml
-    _kubectl create -f cluster-up/cluster/vkind/manifests/network-addons-config-example.cr.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/namespace.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/network-addons-config.crd.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/operator.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/network-addons-config-example.cr.yaml
 
-    _kubectl create -f cluster-up/cluster/vkind/manifests/whereabouts.yaml
+    _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/whereabouts.yaml
 
     _wait_kind_up
     _kubectl cluster-info
@@ -264,13 +264,7 @@ function setup_kind() {
     done
     prepare_config
 
-    if [[ $KUBEVIRT_DEPLOY_CDI == "true" ]]; then
-       KUBEVIRT_CUSTOM_CDI_VERSION=${KUBEVIRT_CUSTOM_CDI_VERSION:-"v1.63.0"}
-      _kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/"$KUBEVIRT_CUSTOM_CDI_VERSION"/cdi-operator.yaml
-      _kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/"$KUBEVIRT_CUSTOM_CDI_VERSION"/cdi-cr.yaml
-    fi
-
-    cluster-up/cluster/vkind/istio.sh
+    $KUBEVIRTCI_PATH/cluster/vkind/istio.sh
 }
 
 function _add_extra_mounts() {

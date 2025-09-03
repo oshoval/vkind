@@ -18,7 +18,7 @@ EOF
 
 # Install Istio using the operator configuration
 echo "Installing Istio with istioctl..."
-./bin/istio-1.24.4/bin/istioctl install -y -f cluster-up/cluster/vkind/manifests/istio-operator-with-cnao.cr.yaml
+$KUBEVIRTCI_PATH/cluster/vkind/istioctl install -y -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/istio-operator-with-cnao.cr.yaml
 
 patch_cni_daemonset() {
     echo "Waiting for CNI DaemonSet to be created and patching it to be privileged..."
