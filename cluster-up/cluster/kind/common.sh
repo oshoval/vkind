@@ -238,6 +238,10 @@ function setup_kind() {
 
     _kubectl create -f $KUBEVIRTCI_PATH/cluster/vkind/manifests/whereabouts.yaml
 
+    if [[ $KUBEVIRT_WITH_DYN_NET_CTRL == true ]]; then
+        DYNAMIC_NETWORKS_CONTROLLER_VERSION=v0.3.7
+        _kubectl create -f https://github.com/k8snetworkplumbingwg/multus-dynamic-networks-controller/releases/download/$DYNAMIC_NETWORKS_CONTROLLER_VERSION/dynamic-networks-controller.yaml
+    fi
     _wait_kind_up
     _kubectl cluster-info
     _fix_node_labels
