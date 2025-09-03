@@ -231,6 +231,13 @@ function setup_kind() {
     _kubectl create -f cluster-up/cluster/vkind/manifests/flannel.yaml
     _kubectl create -f cluster-up/cluster/vkind/manifests/knp.yaml
 
+    _kubectl create -f cluster-up/cluster/vkind/manifests/namespace.yaml
+    _kubectl create -f cluster-up/cluster/vkind/manifests/network-addons-config.crd.yaml
+    _kubectl create -f cluster-up/cluster/vkind/manifests/operator.yaml
+    _kubectl create -f cluster-up/cluster/vkind/manifests/network-addons-config-example.cr.yaml
+
+    _kubectl create -f cluster-up/cluster/vkind/manifests/whereabouts.yaml
+
     _wait_kind_up
     _kubectl cluster-info
     _fix_node_labels
