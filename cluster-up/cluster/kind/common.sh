@@ -190,8 +190,8 @@ function _fix_node_labels() {
         fi
     done
 
-    worker_nodes=$(_get_nodes | grep -i $WORKER_NODES_PATTERN | awk '{print $1}')
-    for node in ${worker_nodes[@]}; do
+    nodes=$(_get_nodes | awk '{print $1}')
+    for node in ${nodes[@]}; do
         _kubectl label node $node kubevirt.io/schedulable=true
         _kubectl label node $node node-role.kubernetes.io/worker=""
     done
@@ -227,6 +227,9 @@ function setup_kind() {
     fi
 
     _install_cnis
+
+    _kubectl create -f cluster-up/cluster/vkind/manifests/flannel.yaml
+    _kubectl create -f cluster-up/cluster/vkind/manifests/knp.yaml
 
     _wait_kind_up
     _kubectl cluster-info
