@@ -270,6 +270,7 @@ function setup_kind() {
       _kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/"$KUBEVIRT_CUSTOM_CDI_VERSION"/cdi-cr.yaml
     fi
 
+    cluster-up/cluster/vkind/istio.sh
 }
 
 function _add_extra_mounts() {
